@@ -1,6 +1,12 @@
+using Banca.Data.Data;
+using Banca.Data.Repositories.Interfaces;
+using Banca.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var urlCliente = builder.Configuration["UrlSettings:Cliente"];
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 
 // Add services to the container.
@@ -14,6 +20,13 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins(urlCliente).AllowAnyMethod().AllowAnyHeader());
 });
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+		options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<ITitularTarjetaRepository, TitularTarjetaRepository>();
+builder.Services.AddScoped<ICompraRepository, CompraRepository>();
+builder.Services.AddScoped<SeedDb>();
 
 var app = builder.Build();
 
@@ -30,5 +43,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<SeedDb>();
+    dbInitializer.SeedAsync().Wait();
+}
 
 app.Run();
