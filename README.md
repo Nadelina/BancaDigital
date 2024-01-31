@@ -4,7 +4,7 @@ Proyecto de banca digital, muestra y exporta el estado de cuenta digital y regis
 
 El proyecto esta construido en 3 capas:
 
- Capa de acceso a datos: `Banca.Data` es un proyecto de librerías .NET Standard que contiene métodos de entrada y salida para las entidades de la base de datos, aquí se aplica el patrón repositorio para los métodos del CRUD, incluye también un repositorio genérico que se hereda en los demás repositorios, se configura un `SeedDB` que se encargara de inicializar la base de datos y generar datos de prueba 
+ Capa de acceso a datos: `Banca.Data` es un proyecto de librerías .NET Standard que contiene métodos de entrada y salida para las entidades de la base de datos, aquí se aplica el patrón repositorio para los métodos del CRUD, incluye también un repositorio genérico que se hereda en los demás repositorios, se configura un `SeedDB` que se encargara de inicializar la base de datos y generar datos de prueba.
 
 Capa de Aplicación y Negocio: `Banca.API`  es un proyecto de .Net 6 que contiene la API desde donde se consumen los métodos creados en la capa de acceso a datos, utiliza principios de CQRS separando las consultas de los comandos e incluye validaciones con FluentValidation
 
@@ -24,16 +24,15 @@ Para configurar el proyecto y levantar un ambiente de desarrollo es necesario:
 > Los triggers actualizaran el saldo del titular en base a la transacción que se realiza: suma el saldo actual cuando se trate de una compra, y resta el saldo actual cuando se trate de un pago
 
 
-
 ## Características de la capa de presentación
 **Estado de cuenta**
-Muestra las compras, pagos y realiza el calculo del interés bonificable y el pago mínimo 
+Muestra las compras, pagos y realiza el calculo del interés bonificable y el pago mínimo . Permite exportar PDF con todos los detalles del estado de cuenta. Y permite exportar por individual detalle de ventas del mes y detalle de pagos del mes.
 **Crear compra**
 El formulario presentado posee validaciones con JQuery
-
-## Características de la capa de negocio
+**Crear pagos**
+El formulario presentado posee validaciones con JQuery
 
 
 ### Peticiones de prueba
+Coleccion postman:
 https://red-star-626662.postman.co/workspace/Team-Workspace~ca4bd1bc-e990-44e7-8a38-cfb13300fc9f/collection/19633127-05bbe916-0178-4882-9593-581071f63449?action=share&creator=19633127
-
