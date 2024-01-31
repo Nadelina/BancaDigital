@@ -23,6 +23,7 @@
                     <h2 class="card-title">Información del Titular</h2>
                     <p><strong>Titular:</strong> @Model.NombreTitular</p>
                     <p><strong>Número de Tarjeta:</strong> @Model.NumeroTarjeta.ToCardFormat()</p>
+                    <p></p>
                 </div>
             </div>
         </div>
@@ -43,11 +44,11 @@
         <div class="col-12">
             <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center pb-4">
                         <h2 class="card-title mb-0">Compras del Mes</h2>
                         <a asp-controller="Compra" asp-action="Crear" asp-route-id="@Model.TitularTarjetaId" class="btn btn-outline-success">Nueva Compra</a>
                     </div>
-                    <table class="table table-striped mt-3">
+                    <table id="comprasTable" class="table table-striped mt-3">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -76,11 +77,11 @@
         <div class="col-12">
             <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center pb-4">
                         <h2 class="card-title mb-0">Pagos</h2>
                         <a asp-controller="Pago" asp-action="Crear" asp-route-id="@Model.TitularTarjetaId" class="btn btn-outline-success">Realizar Pago</a>
                     </div>
-                    <table class="table table-striped mt-3">
+                    <table id="pagosTable" class="table table-striped mt-3">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -122,4 +123,98 @@
 </div>
 
 @section Scripts {
+    
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+        $("#comprasTable").DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                        extend: 'excelHtml5',
+                        text: 'Exportar a Excel',
+                        filename: 'DetalleDeCompras'
+                }
+            ],
+            language: {
+                search: "Buscar",
+                lengthMenu: "Mostrar _MENU_ registros",
+                zeroRecords: "No se encontraron registros",
+                emptyTable: "Ningún dato disponible en esta tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                loadingRecords: "Cargando",
+                paginate: {
+                    first: "Primero",
+                    last: "Ultimo",
+                    next: "siguiente",
+                    previous: "Anterior"
+                },
+                aria: {
+                    sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sortDescending: ": Activar para ordenar la columna de manera descendente"
+                },
+                buttons: {
+                    excel: 'Exportar a Excel'
+                }
+            },
+            columnDefs: [{
+                targets: 2,
+                orderable: false,
+                searchable: false
+            }]
+
+        });
+
+        $("#pagosTable").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Exportar a Excel',
+                        filename: 'DetalleDePagos'
+                    }
+                ],
+            language: {
+                search: "Buscar",
+                lengthMenu: "Mostrar _MENU_ registros",
+                zeroRecords: "No se encontraron registros",
+                emptyTable: "Ningún dato disponible en esta tabla",
+                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                loadingRecords: "Cargando",
+                paginate: {
+                    first: "Primero",
+                    last: "Ultimo",
+                    next: "siguiente",
+                    previous: "Anterior"
+                },
+                aria: {
+                    sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sortDescending: ": Activar para ordenar la columna de manera descendente"
+                },
+                    buttons: {
+                        excel: 'Exportar a Excel'
+                    }
+
+            },
+            columnDefs: [{
+                // targets: 2,
+                orderable: false,
+                searchable: false
+            }]
+        });
+        });
+    </script>
 }

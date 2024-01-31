@@ -36,6 +36,8 @@ namespace Banca.API.Handlers
             titularTarjeta.NumeroTarjeta = command.NumeroTarjeta;
             titularTarjeta.NombreTitular = command.NombreTitular;
             titularTarjeta.SaldoActual = command.SaldoActual;
+            titularTarjeta.PorcentajeInteresConfigurable = command.PorcentajeInteresConfigurable;
+            titularTarjeta.PorcentajeSaldoMinimoConfigurable = command.PorcentajeSaldoMinimoConfigurable;
             await _titularTarjetaRepository.UpdateAsync(titularTarjeta);
         }
 

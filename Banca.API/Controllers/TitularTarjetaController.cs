@@ -39,6 +39,7 @@ namespace Banca.API.Controllers
             var titularesTarjeta = await _handler.ObtenerListado();
             return Ok(titularesTarjeta);
         }
+       
         [HttpPost("ExportarEstadoPDF")]
         public ActionResult<TitularTarjeta> ExportarEstadoPDF(EstadoDeCuentaDto estadoDeCuenta)
         {
@@ -63,17 +64,17 @@ namespace Banca.API.Controllers
                         });
                         row.RelativeItem().Column(col =>
                         {
-                            col.Item().Background("#257272").Border(1).BorderColor("#257272")
-                            .AlignCenter().Text("DETALLES FINANCIEROS");
+                            col.Item().Background("#630e0e").Border(1).BorderColor("#630e0e")
+                            .AlignCenter().Text("DETALLES FINANCIEROS").FontColor("#fff");
 
                             col.Item().Border(1)
-                            .BorderColor("#257272")
+                            .BorderColor("#630e0e")
                             .AlignCenter().Text("Saldo actual: $" + estadoDeCuenta.SaldoActual);
 
-                            col.Item().Border(1).BorderColor("#257272").
+                            col.Item().Border(1).BorderColor("#630e0e").
                             AlignCenter().Text("Limite credito: $" + estadoDeCuenta.LimiteCredito);
 
-                            col.Item().Border(1).BorderColor("#257272").
+                            col.Item().Border(1).BorderColor("#630e0e").
                             AlignCenter().Text("Saldo disponible: $" + estadoDeCuenta.SaldoDisponible);
                         });
                     });
@@ -112,13 +113,13 @@ namespace Banca.API.Controllers
                             });
                             tabla.Header(header =>
                             {
-                                header.Cell().Background("#257272")
+                                header.Cell().Background("#630e0e")
                                 .Padding(2).Text("Fecha").FontColor("#fff");
 
-                                header.Cell().Background("#257272")
+                                header.Cell().Background("#630e0e")
                                .Padding(2).Text("Descripcion").FontColor("#fff");
 
-                                header.Cell().Background("#257272")
+                                header.Cell().Background("#630e0e")
                                .Padding(2).Text("Monto").FontColor("#fff");
                             });
                             foreach (var item in estadoDeCuenta.ComprasDelMes)
@@ -147,23 +148,23 @@ namespace Banca.API.Controllers
                             });
                             tabla2.Header(header =>
                             {
-                                header.Cell().Background("#257272")
+                                header.Cell().Background("#630e0e")
                                 .Padding(2).Text("Cuota minima a pagar").FontColor("#fff");
 
-                                header.Cell().Background("#257272")
+                                header.Cell().Background("#630e0e")
                                .Padding(2).Text("Pago al contado").FontColor("#fff");
 
-                                header.Cell().Background("#257272")
+                                header.Cell().Background("#630e0e")
                                .Padding(2).Text("Pago al contado + intereses").FontColor("#fff");
                             });
                             tabla2.Cell().BorderBottom(0.5f).BorderColor("#D9D9D9")
-                                   .Padding(2).Text("$" + estadoDeCuenta.CuotaMinimaAPagar.ToString()).FontSize(10);
+                                   .Padding(2).Text("$" + estadoDeCuenta.CuotaMinimaAPagar.ToString("#.##")).FontSize(10);
 
                             tabla2.Cell().BorderBottom(0.5f).BorderColor("#D9D9D9")
                             .Padding(2).Text("$" + estadoDeCuenta.MontoTotalAPagar.ToString()).FontSize(10);
 
                             tabla2.Cell().BorderBottom(0.5f).BorderColor("#D9D9D9")
-                            .Padding(2).Text($"$ {estadoDeCuenta.PagoContadoConIntereses}").FontSize(10);
+                            .Padding(2).Text("$"+estadoDeCuenta.PagoContadoConIntereses.ToString("#.##")).FontSize(10);
                         });
                     });
 
@@ -181,7 +182,7 @@ namespace Banca.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<TitularTarjeta>> Actualizar(ActualizarTitularTarjetaCommand command)
+        public async Task<ActionResult> Actualizar(ActualizarTitularTarjetaCommand command)
         {
             await _handler.Actualizar(command);
             return Ok();

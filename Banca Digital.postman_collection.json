@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "05bbe916-0178-4882-9593-581071f63449",
+		"name": "Banca Digital",
+		"description": "Peticiones hacia API de Banca digital",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19633127",
+		"_collection_link": "https://red-star-626662.postman.co/workspace/Team-Workspace~ca4bd1bc-e990-44e7-8a38-cfb13300fc9f/collection/19633127-05bbe916-0178-4882-9593-581071f63449?action=share&source=collection_link&creator=19633127"
+	},
+	"item": [
+		{
+			"name": "Crea Compra Validacion Error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titularTarjetaId\": 0,\r\n  \"fecha\": \"2024-01-31T09:35:15.907Z\",\r\n  \"descripcion\": \"string\",\r\n  \"monto\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7058/api/Compra",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7058",
+					"path": [
+						"api",
+						"Compra"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea compra exitoso",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titularTarjetaId\": 1,\r\n  \"fecha\": \"2024-01-31T09:35:15.907Z\",\r\n  \"descripcion\": \"Compra Restaurante\",\r\n  \"monto\": 40\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7058/api/Compra",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7058",
+					"path": [
+						"api",
+						"Compra"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cuando elimina una compra",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"compraId\": 6,\r\n  \"fecha\": \"2024-01-31T11:35:43.876Z\",\r\n  \"descripcion\": \"Compra internet\",\r\n  \"monto\":47.30,\r\n  \"titularTarjetaId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7058/api/Compra",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7058",
+					"path": [
+						"api",
+						"Compra"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar porcentajes y datos del titular",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titularTarjetaId\": 1,\r\n  \"nombreTitular\": \"Nathaly Gutierrez\",\r\n  \"numeroTarjeta\": \"4096309916145537\",\r\n  \"saldoActual\": 114.47,\r\n  \"limiteCredito\": 1000,\r\n  \"porcentajeInteresConfigurable\": 30,\r\n  \"porcentajeSaldoMinimoConfigurable\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7058/api/TitularTarjeta",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7058",
+					"path": [
+						"api",
+						"TitularTarjeta"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
