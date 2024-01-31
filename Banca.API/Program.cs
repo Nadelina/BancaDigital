@@ -33,13 +33,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CrearCompraCommandValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<ActualizarTitularTarjetaCommandValidator>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddScoped<TitularTarjetaHandler>();
 builder.Services.AddScoped<CompraHandler>();
+builder.Services.AddScoped<PagoHandler>();
 builder.Services.AddScoped<ITitularTarjetaRepository, TitularTarjetaRepository>();
 builder.Services.AddScoped<ICompraRepository, CompraRepository>();
+builder.Services.AddScoped<IPagoRepository, PagoRepository>();
 builder.Services.AddScoped<SeedDb>();
 
 var app = builder.Build();

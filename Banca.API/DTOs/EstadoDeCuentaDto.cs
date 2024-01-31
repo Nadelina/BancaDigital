@@ -9,6 +9,7 @@
         public decimal LimiteCredito { get; set; }
         public decimal SaldoDisponible => LimiteCredito - SaldoActual;
         public List<CompraDto> ComprasDelMes { get; set; }
+        public List<PagoDto> Pagos { get; set; }
         public decimal MontoTotalComprasMesActual { get; set; }
         public decimal MontoTotalComprasMesAnterior { get; set; }
         public decimal PorcentajeInteresConfigurable { get; set; } 

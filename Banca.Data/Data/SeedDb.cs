@@ -29,27 +29,6 @@ namespace Banca.Data.Data
 
                 // Agregar el titular a la base de datos
                 context.TitularesTarjeta.Add(titularTarjeta);
-
-                // Crear compras asociadas
-                var compra1 = new Compra
-                {
-                    TitularTarjeta = titularTarjeta, // Asociar con el titular
-                    Fecha = DateTime.Now,
-                    Descripcion = "Compra en Supermercado",
-                    Monto = 150
-                };
-
-                var compra2 = new Compra
-                {
-                    TitularTarjeta = titularTarjeta, // Asociar con el titular
-                    Fecha = DateTime.Now,
-                    Descripcion = "Compra en Tienda de Ropa",
-                    Monto = 200
-                };
-
-                // Agregar las compras a la base de datos
-                context.Compras.AddRange(compra1, compra2);
-
                 // Guardar los cambios en la base de datos
                 await context.SaveChangesAsync();
             }

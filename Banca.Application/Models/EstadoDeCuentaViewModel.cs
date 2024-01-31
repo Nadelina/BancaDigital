@@ -18,6 +18,8 @@ namespace Banca.Application.Models
         public decimal SaldoDisponible { get; set; }
         [JsonPropertyName("comprasDelMes")]
         public List<CompraViewModel> ComprasDelMes { get; set; } = new List<CompraViewModel>();
+        [JsonPropertyName("pagos")]
+        public List<PagoViewModel> Pagos { get; set; } = new List<PagoViewModel>();
         [JsonPropertyName("montoTotalComprasMesActual")]
         public decimal MontoTotalComprasMesActual { get; set; }
         [JsonPropertyName("montoTotalComprasMesAnterior")]

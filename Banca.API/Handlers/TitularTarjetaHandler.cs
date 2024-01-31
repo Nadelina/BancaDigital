@@ -11,10 +11,13 @@ namespace Banca.API.Handlers
     {
         private readonly ITitularTarjetaRepository _titularTarjetaRepository;
         private readonly CompraHandler _compraHandler;
-        public TitularTarjetaHandler(ITitularTarjetaRepository titularTarjetaRepository, CompraHandler compraHandler)
+        private readonly PagoHandler _pagoHandler;
+        public TitularTarjetaHandler(ITitularTarjetaRepository titularTarjetaRepository,
+            CompraHandler compraHandler, PagoHandler pagoHandler)
         {
             _titularTarjetaRepository = titularTarjetaRepository;
             _compraHandler = compraHandler;
+            _pagoHandler = pagoHandler;
         }
 
         public async Task<TitularTarjeta> ObtenerPorId(ObtenerTitularTarjetaQuery query)
@@ -45,6 +48,10 @@ namespace Banca.API.Handlers
             {
                 TitularTarjetaId = query.TitularTarjetaId,
             });
+            var pagos = await _pagoHandler.PagosPorTitularIdAsync(new()
+            {
+                TitularTarjetaId = query.TitularTarjetaId,
+            });
 
             var comprasDelMes = compras.Where(c => c.Fecha.Month == DateTime.Now.Month && c.Fecha.Year == DateTime.Now.Year).ToList();
             var comprasMesAnterior = compras.Where(c => c.Fecha.Month == DateTime.Now.AddMonths(-1).Month && c.Fecha.Year == DateTime.Now.Year).ToList();
@@ -62,6 +69,11 @@ namespace Banca.API.Handlers
                     Fecha = compra.Fecha,
                     Descripcion = compra.Descripcion,
                     Monto = compra.Monto
+                }).ToList(),
+                Pagos = pagos.Select(pago => new PagoDto
+                {
+                    FechaPago = pago.FechaPago,
+                    Monto = pago.Monto
                 }).ToList(),
                 MontoTotalComprasMesActual = comprasDelMes.Sum(c => c.Monto),
                 MontoTotalComprasMesAnterior = comprasMesAnterior.Sum(c => c.Monto),

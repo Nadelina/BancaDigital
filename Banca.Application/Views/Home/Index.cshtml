@@ -5,15 +5,36 @@
 }
 
 
-@foreach(var item in Model)
+@foreach (var item in Model)
 {
     <a asp-controller="EstadoCuenta" asp-action="Index" asp-route-id="@item.TitularTarjetaId" class="card credit-card-button text-decoration-none">
         <div class="card-body">
             <h5 class="card-title">@item.NombreTitular</h5>
-            <p class="card-text">@item.NumeroTarjeta.ToCardFormat()</p>
+            <p class="card-text">
+                <span class="card-number">@item.NumeroTarjeta.ToCardFormat()</span>
+                <span class="card-icon"></span>
+            </p>
             <p class="card-text">Saldo Actual: @item.SaldoActual.ToString("C")</p>
             <p class="card-text">Límite de Crédito: @item.LimiteCredito.ToString("C")</p>
             <p class="card-text"><small class="text-muted">Ver estado</small></p>
         </div>
     </a>
+}
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.card-number').each(function () {
+                var cardNumber = $(this).text().trim();
+                var cardIconSpan = $(this).next('.card-icon');
+
+                if (cardNumber.startsWith('4')) {
+                    cardIconSpan.html('<i class="bi bi-credit-card-2-front-fill"></i>');
+                } else if (cardNumber.startsWith('5')) {
+                    cardIconSpan.html('<i class="bi bi-credit-card-fill"></i>');
+                }
+            });
+        });
+    </script>
 }

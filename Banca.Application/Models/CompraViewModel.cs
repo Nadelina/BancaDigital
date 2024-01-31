@@ -4,6 +4,7 @@ namespace Banca.Application.Models
 {
 	public class CompraViewModel
 	{
+        public int TitularTarjetaId { get; set; }
         [JsonPropertyName("fecha")]
         public DateTime Fecha { get; set; }
         [JsonPropertyName("descripcion")]

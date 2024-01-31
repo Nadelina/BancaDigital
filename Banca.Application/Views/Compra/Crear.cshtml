@@ -1,0 +1,75 @@
+﻿@model Banca.Application.Models.CompraViewModel
+
+@{
+    ViewData["Title"] = "Nueva Compra";
+}
+
+<div class="container">
+    <h1 class="text-center mb-4">Nueva Compra</h1>
+    <div class="mb-3">
+        <a href="@Url.Action("Index", "EstadoCuenta", new{id = ViewBag.TitularId})" class="btn btn-outline-primary">Regresar</a>
+    </div>
+
+    <form asp-action="Crear" asp-controller="Compra" method="post" class="card p-3 mb-5 bg-white rounded">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="text" asp-for="TitularTarjetaId" value="@ViewBag.TitularId" hidden>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="Fecha" class="form-label">Fecha</label>
+                <input type="date" class="form-control" id="Fecha" asp-for="Fecha">
+                <span class="text-danger" id="errorFecha" style="display:none;">Por favor, ingrese una fecha.</span>
+            </div>
+
+            <div class="mb-3">
+                <label for="Descripcion" class="form-label">Descripción</label>
+                <input type="text" class="form-control" id="Descripcion" asp-for="Descripcion">
+                <span class="text-danger" id="errorDescripcion" style="display:none;">Por favor, ingrese una descripción.</span>
+            </div>
+
+            <div class="mb-3">
+                <label for="Monto" class="form-label">Monto</label>
+                <input type="number" class="form-control" step="0.01" id="Monto" asp-for="Monto">
+                <span class="text-danger" id="errorMonto" style="display:none;">Por favor, ingrese un monto válido.</span>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar Compra</button>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var hoy = new Date().toISOString().split('T')[0];
+            $('#Fecha').val(hoy);
+
+            $('form').submit(function (event) {
+                var fecha = $('#Fecha').val();
+                var descripcion = $('#Descripcion').val();
+                var monto = $('#Monto').val();
+                var valido = true;
+                // Limpiar errores anteriores
+                $('.text-danger').hide();
+                // Validar la fecha
+                if (fecha === '') {
+                    $('#errorFecha').show();
+                    valido = false;
+                }
+                // Validar la descripción
+                if (descripcion === '') {
+                    $('#errorDescripcion').show();
+                    valido = false;
+                }
+                // Validar el monto
+                if (monto === '' || isNaN(monto) || parseFloat(monto) <= 0) {
+                    $('#errorMonto').show();
+                    valido = false;
+                }
+                // Si algún campo no es válido, previene el envío del formulario
+                if (!valido) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+}

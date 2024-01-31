@@ -1,0 +1,62 @@
+﻿@model Banca.Application.Models.PagoViewModel
+
+@{
+    ViewData["Title"] = "Nuevo Pago";
+}
+
+<div class="container">
+    <h1 class="text-center mb-4">Nuevo Pago</h1>
+    <div class="mb-3">
+        <a href="@Url.Action("Index", "EstadoCuenta", new{id = ViewBag.TitularId})" class="btn btn-outline-primary">Regresar</a>
+    </div>
+
+    <form asp-action="Crear" asp-controller="Pago" method="post" class="card p-3 mb-5 bg-white rounded">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="text" asp-for="TitularTarjetaId" value="@ViewBag.TitularId" hidden>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="FechaPago" class="form-label">Fecha del Pago</label>
+                <input type="date" class="form-control" id="FechaPago" asp-for="FechaPago">
+                <span class="text-danger" id="errorFechaPago" style="display:none;">Por favor, ingrese la fecha del pago.</span>
+            </div>
+
+            <div class="mb-3">
+                <label for="Monto" class="form-label">Monto del Pago</label>
+                <input type="number" class="form-control" step="0.01" id="Monto" asp-for="Monto">
+                <span class="text-danger" id="errorMonto" style="display:none;">Por favor, ingrese un monto válido.</span>
+            </div>
+            <button type="submit" class="btn btn-success">Realizar Pago</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var hoy = new Date().toISOString().split('T')[0];
+            $('#FechaPago').val(hoy);
+
+            $('form').submit(function (event) {
+                var fechaPago = $('#FechaPago').val();
+                var monto = $('#Monto').val();
+                var valido = true;
+                // Limpiar errores anteriores
+                $('.text-danger').hide();
+                // Validar la fecha del pago
+                if (fechaPago === '') {
+                    $('#errorFechaPago').show();
+                    valido = false;
+                }
+                // Validar el monto del pago
+                if (monto === '' || isNaN(monto) || parseFloat(monto) <= 0) {
+                    $('#errorMonto').show();
+                    valido = false;
+                }
+                // Si algún campo no es válido, previene el envío del formulario
+                if (!valido) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+}

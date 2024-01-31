@@ -43,8 +43,11 @@
         <div class="col-12">
             <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <h2 class="card-title">Compras del Mes</h2>
-                    <table class="table table-striped">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="card-title mb-0">Compras del Mes</h2>
+                        <a asp-controller="Compra" asp-action="Crear" asp-route-id="@Model.TitularTarjetaId" class="btn btn-outline-success">Nueva Compra</a>
+                    </div>
+                    <table class="table table-striped mt-3">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -68,6 +71,38 @@
         </div>
     </div>
 
+    <!-- Pagos -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="card-title mb-0">Pagos</h2>
+                        <a asp-controller="Pago" asp-action="Crear" asp-route-id="@Model.TitularTarjetaId" class="btn btn-outline-success">Realizar Pago</a>
+                    </div>
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var pago in Model.Pagos)
+                            {
+                                <tr>
+                                    <td>@pago.FechaPago.ToShortDateString()</td>
+                                    <td>@pago.Monto.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Resumen Financiero -->
     <div class="row">
         <div class="col-12">
@@ -87,5 +122,4 @@
 </div>
 
 @section Scripts {
-    @* Aquí puedes añadir scripts específicos de jQuery si son necesarios *@
 }
