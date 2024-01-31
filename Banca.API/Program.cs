@@ -2,6 +2,7 @@ using Banca.Data.Data;
 using Banca.Data.Repositories.Interfaces;
 using Banca.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Banca.API.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 		options.UseSqlServer(connectionString));
 
+builder.Services.AddScoped<TitularTarjetaHandler>();
+builder.Services.AddScoped<CompraHandler>();
 builder.Services.AddScoped<ITitularTarjetaRepository, TitularTarjetaRepository>();
 builder.Services.AddScoped<ICompraRepository, CompraRepository>();
 builder.Services.AddScoped<SeedDb>();
