@@ -3,6 +3,11 @@ using Banca.Data.Repositories.Interfaces;
 using Banca.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Banca.API.Handlers;
+using Banca.API.Validators.Compra;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using Banca.API.Validators.TitularTarjeta;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +29,12 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 		options.UseSqlServer(connectionString));
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CrearCompraCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<ActualizarTitularTarjetaCommandValidator>();
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddScoped<TitularTarjetaHandler>();
 builder.Services.AddScoped<CompraHandler>();

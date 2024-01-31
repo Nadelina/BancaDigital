@@ -11,6 +11,6 @@ namespace Banca.Data.Repositories
         }
 
         public async Task<TitularTarjeta> ObtenerPorIdAsync(int id) =>
-            await context.TitularesTarjeta.FindAsync(id);
+            await context.TitularesTarjeta.FindAsync(id) ?? null!;
     }
 }

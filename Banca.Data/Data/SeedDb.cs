@@ -22,8 +22,8 @@ namespace Banca.Data.Data
                 var titularTarjeta = new TitularTarjeta
                 {
                     NombreTitular = "Nathaly Gutierrez",
-                    NumeroTarjeta = "1234 5678 9012 3456",
-                    SaldoActual = 500,
+                    NumeroTarjeta = "4096309916145537",
+                    SaldoActual = 114.47m,
                     LimiteCredito = 1000
                 };
 

@@ -1,0 +1,91 @@
+﻿@using Banca.Application.Utils
+@model EstadoDeCuentaViewModel
+
+@{
+    ViewBag.Title = "Estado de Cuenta";
+}
+
+<h1 class="text-center mb-4">Estado de Cuenta</h1>
+<div class="d-flex justify-content-between mb-3">
+    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary">Regresar</a>
+
+    <form asp-action="ExportarPDF" asp-controller="EstadoCuenta">
+        <input asp-for="TitularTarjetaId" hidden />
+        <button class="btn btn-outline-danger" type="submit">Descargar PDF</button>
+    </form>
+</div>
+<div class="container">
+    <!-- Información del Titular y Detalles Financieros -->
+    <div class="row my-4">
+        <div class="col-lg-6">
+            <div class="card shadow-sm p-3 mb-2 bg-white rounded">
+                <div class="card-body">
+                    <h2 class="card-title">Información del Titular</h2>
+                    <p><strong>Titular:</strong> @Model.NombreTitular</p>
+                    <p><strong>Número de Tarjeta:</strong> @Model.NumeroTarjeta.ToCardFormat()</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow-sm p-3 mb-2 bg-white rounded">
+                <div class="card-body">
+                    <h2 class="card-title">Detalles Financieros</h2>
+                    <p><strong>Saldo Actual:</strong> @Model.SaldoActual.ToString("C")</p>
+                    <p><strong>Límite de Crédito:</strong> @Model.LimiteCredito.ToString("C")</p>
+                    <p><strong>Saldo Disponible:</strong> @Model.SaldoDisponible.ToString("C")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compras del Mes -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2 class="card-title">Compras del Mes</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Descripción</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var compra in Model.ComprasDelMes)
+                            {
+                                <tr>
+                                    <td>@compra.Fecha.ToShortDateString()</td>
+                                    <td>@compra.Descripcion</td>
+                                    <td>@compra.Monto.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumen Financiero -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2 class="card-title">Resumen Financiero</h2>
+                    <p><strong>Monto Total Compras Mes Actual:</strong> @Model.MontoTotalComprasMesActual.ToString("C")</p>
+                    <p><strong>Monto Total Compras Mes Anterior:</strong> @Model.MontoTotalComprasMesAnterior.ToString("C")</p>
+                    <p><strong>Interés Bonificable:</strong> @Model.InteresBonificable.ToString("C")</p>
+                    <p><strong>Cuota Mínima a Pagar:</strong> @Model.CuotaMinimaAPagar.ToString("C")</p>
+                    <p><strong>Monto Total a Pagar:</strong> @Model.MontoTotalAPagar.ToString("C")</p>
+                    <p><strong>Pago de Contado con Intereses:</strong> @Model.PagoContadoConIntereses.ToString("C")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* Aquí puedes añadir scripts específicos de jQuery si son necesarios *@
+}

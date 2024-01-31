@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Banca.Data.Data.Entities
+﻿namespace Banca.Data.Data.Entities
 {
     public class TitularTarjeta
     {
@@ -16,6 +10,9 @@ namespace Banca.Data.Data.Entities
 
         // Relación uno a muchos con Compra
         public List<Compra> Compras { get; set; } = null!;
+        public List<Pago> Pagos { get; set; } = null!;
+        public decimal PorcentajeInteresConfigurable { get; set; } = 25;
+        public decimal PorcentajeSaldoMinimoConfigurable { get; set; } = 5;
     }
 
 }

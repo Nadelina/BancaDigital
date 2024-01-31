@@ -16,3 +16,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.credit-card-button {
+    color: #fff; 
+    background-color: #630e0e;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(243, 137, 137);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.credit-card-button:hover {
+    text-decoration: none;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgb(243, 137, 137);
+    color: #fff; 
+}

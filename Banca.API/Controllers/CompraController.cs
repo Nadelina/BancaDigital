@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Banca.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CompraController : ControllerBase
     {
         private readonly CompraHandler _compraHandler;
